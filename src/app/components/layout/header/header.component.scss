@@ -1,0 +1,12 @@
+.navbar {
+  justify-content: space-between;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  &__item {
+  }
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}

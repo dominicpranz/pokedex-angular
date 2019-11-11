@@ -1,0 +1,61 @@
+<div class="pokemon-component-wrapper">
+
+  <h1>Pokemon</h1>
+
+  <div class="pokemon-card-wrapper">
+
+    <mat-card class="pokemon-card" *ngFor="let pokedata of pokelist" (click)="cardClick(moreInfoPanel, pokedata)">
+      <mat-card-header>
+        <div mat-card-avatar class="pokemon-header-image" [ngStyle]="{ 'background-image' : 'url(https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokedata.id + '.png)' }"></div>
+        <mat-card-title class="pokemon-card__title">{{ pokedata.name }}</mat-card-title>
+        <!--mat-card-subtitle># {{ pokedata.id }}</mat-card-subtitle-->
+      </mat-card-header>
+      <img mat-card-image src="https://pokeres.bastionbot.org/images/pokemon/{{ pokedata.id }}.png" alt="Photo of {{ pokedata.name }}">
+      <mat-card-content>
+
+        <mat-accordion>
+
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" #moreInfoPanel (click)="$event.stopPropagation();" class="pokemon-card__panel">
+
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span *ngIf="!moreInfoPanel.expanded; else elseBlock">More info</span>
+                <ng-template #elseBlock>
+                  Less info
+                </ng-template>
+              </mat-panel-title>
+              <mat-panel-description>
+                <!--span *ngFor="let type of pokedata.types">{{ type }}</span-->
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <ng-template matExpansionPanelContent>
+              <mat-spinner *ngIf="!pokedata.finishedLoading; else contentLoaded"></mat-spinner>
+              <ng-template #contentLoaded>
+                <mat-list role="list">
+                  <mat-list-item role="listitem"><b>Type</b>
+                    <span *ngFor="let type of pokedata.types" class="type {{ type }}">
+                      {{ type }}
+                    </span>
+                  </mat-list-item>
+                  <mat-list-item role="listitem"><b>Height</b><span>{{ pokedata.height / 10 }} m</span></mat-list-item>
+                  <mat-list-item role="listitem"><b>Weight</b><span>{{ pokedata.weight / 10 }} kg</span></mat-list-item>
+                </mat-list>
+                <p>
+                  {{ pokedata.randomflavorText }}
+                </p>
+              </ng-template>
+            </ng-template>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </mat-card-content>
+      <mat-card-actions>
+        <!--button mat-button>LIKE</button>
+    <button mat-button>SHARE</button-->
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+
+</div>
